@@ -11,7 +11,6 @@ db_session = SessionLocal()
 
 router = APIRouter()
 
-
 @router.get("/login")
 async def login(login: Login):
     query_user = get_user_by_email(db_session, login.email)
