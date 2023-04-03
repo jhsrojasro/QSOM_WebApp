@@ -1,6 +1,7 @@
 fastapi
 uvicorn
 sqlalchemy
+sqlalchemy-utils
 python-jose
 passlib
 mysqlclient

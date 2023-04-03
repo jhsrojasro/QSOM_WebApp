@@ -16,21 +16,18 @@
 
 */
 
-import ParcoursRecherche from "views/ParcoursRecherche";
 import SOM from "views/SOM";
 import RL from "views/RL";
-import QLearning from "views/QLearning";
 import QSOM from "views/QSOM";
-import Gymnasium from "views/Gymnasium";
 import TrainModels from "views/TrainModels";
 
 
 var nav_routes = [
   {
-    path: "/parcours_recherche",
-    name: "Parcours Recherche",
-    icon: "tim-icons icon-world",
-    component: ParcoursRecherche
+    path: "/rl",
+    name: "Reinforcement Learning",
+    icon: "tim-icons icon-controller",
+    component: RL
   },
   {
     path: "/som",
@@ -39,28 +36,10 @@ var nav_routes = [
     component: SOM
   },
   {
-    path: "/rl",
-    name: "Reinforcement Learning",
-    icon: "tim-icons icon-controller",
-    component: RL
-  },
-  {
-    path: "/q_learning",
-    name: "Q Learning",
-    icon: "tim-icons icon-molecule-40",
-    component: QLearning
-  },
-  {
     path: "/qsom",
     name: "QSOM",
     icon: "tim-icons icon-bulb-63",
     component: QSOM
-  },
-  {
-    path: "/gymnasium",
-    name: "OpenAI Gymnasium",
-    icon: "tim-icons icon-planet",
-    component: Gymnasium
   },
   {
     path: "/train_models",

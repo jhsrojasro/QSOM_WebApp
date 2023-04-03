@@ -7,7 +7,10 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(String(36), primary_key=True, index=True)
-    first_name = Column(String(20))
-    last_name = Column(String(20))
+    firstname = Column(String(20))
+    lastname = Column(String(20))
     email = Column(String(64), unique=True, index=True)
     password = Column(String(255))
+    institution = Column(String(255))
+    city = Column(String(255))
+    country = Column(String(255))

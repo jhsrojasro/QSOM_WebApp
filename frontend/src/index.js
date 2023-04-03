@@ -34,9 +34,9 @@ import store from './redux/store'
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 
-console.log("PROTOCOL: "+process.env.REACT_APP_PROTOCOL)
-console.log("BACKEND_HOST: "+process.env.REACT_APP_BACKEND_HOST)
-console.log("BACKEND_PORT: "+process.env.REACT_APP_BACKEND_PORT)
+// console.log("PROTOCOL: "+process.env.REACT_APP_PROTOCOL)
+// console.log("BACKEND_HOST: "+process.env.REACT_APP_BACKEND_HOST)
+// console.log("BACKEND_PORT: "+process.env.REACT_APP_BACKEND_PORT)
 
 root.render(
   <Provider store={store}>

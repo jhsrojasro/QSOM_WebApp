@@ -90,7 +90,11 @@ h1, h2, h3, h4, h5, h6 {
 
 p {
   margin-top: 0;
-  margin-bottom: 1rem; }
+  margin-bottom: 1rem;
+  font-size: large; }
+
+.card .card-body .card-text:last-child p {
+  font-size:large; }
 
 abbr[title],
 abbr[data-original-title] {
@@ -3644,6 +3648,7 @@ input[type="button"].btn-block {
 .card-subtitle {
   margin-top: -0.625rem;
   margin-bottom: 0; }
+  
 
 .card-text:last-child {
   margin-bottom: 0; }
@@ -13317,7 +13322,8 @@ textarea.form-control {
   .card .card-title {
     margin-bottom: .75rem; }
   .card .card-body {
-    padding: 15px; }
+    padding: 15px;
+   }
     .card .card-body.table-full-width {
       padding-left: 0;
       padding-right: 0; }

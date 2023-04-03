@@ -6,6 +6,12 @@ credentials_exception = HTTPException(
     headers={"WWW-Authenticate": "Bearer"},
 )
 
+token_expired_exception = HTTPException(
+    status_code=status.HTTP_401_UNAUTHORIZED,
+    detail="Token expired",
+    headers={"WWW-Authenticate": "Bearer"},
+)
+
 email_already_exists_exception = HTTPException(
     status_code=status.HTTP_400_BAD_REQUEST,
     detail="Email already exists"

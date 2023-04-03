@@ -18,6 +18,7 @@
 import React from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
+import store from '../../redux/store';
 
 // reactstrap components
 import {
@@ -38,8 +39,13 @@ import {
   NavbarToggler,
   ModalHeader
 } from "reactstrap";
+import { useHistory} from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { logOut } from '../../redux/reducers/user';
 
 function AdminNavbar(props) {
+  const history = useHistory();
+  const dispatch = useDispatch();
   const [collapseOpen, setcollapseOpen] = React.useState(false);
   const [modalSearch, setmodalSearch] = React.useState(false);
   const [color, setcolor] = React.useState("navbar-transparent");
@@ -71,6 +77,16 @@ function AdminNavbar(props) {
   const toggleModalSearch = () => {
     setmodalSearch(!modalSearch);
   };
+
+  const handleLogout = () => {
+    dispatch(logOut({}));
+    return history.push('/login');
+  }
+
+  const handleProfile = () => {
+    return history.push('/user-profile');
+  }
+
   return (
     <>
       <Navbar className={classNames("navbar-absolute", color)} expand="lg">
@@ -91,43 +107,49 @@ function AdminNavbar(props) {
               2A Projet Recherche RL
             </NavbarBrand>
           </div>
+
           <NavbarToggler onClick={toggleCollapse}>
             <span className="navbar-toggler-bar navbar-kebab" />
             <span className="navbar-toggler-bar navbar-kebab" />
             <span className="navbar-toggler-bar navbar-kebab" />
           </NavbarToggler>
-              
-          <Collapse navbar isOpen={collapseOpen}>
-            <Nav className="ml-auto" navbar>
-              <UncontrolledDropdown nav>
-                <DropdownToggle
-                  caret
-                  color="default"
-                  nav
-                  onClick={(e) => e.preventDefault()}
-                >
-                  <div className="photo">
-                    <img alt="..." src={require("assets/img/anime3.png")} />
-                  </div>
-                  <b className="caret d-none d-lg-block d-xl-block" />
-                  <p className="d-lg-none">Log out</p>
-                </DropdownToggle>
-                <DropdownMenu className="dropdown-navbar" right tag="ul">
-                  <NavLink tag="li">
-                    <DropdownItem className="nav-item">Profile</DropdownItem>
-                  </NavLink>
-                  <NavLink tag="li">
-                    <DropdownItem className="nav-item">Settings</DropdownItem>
-                  </NavLink>
-                  <DropdownItem divider tag="li" />
-                  <NavLink tag="li">
-                    <DropdownItem className="nav-item">Log out</DropdownItem>
-                  </NavLink>
-                </DropdownMenu>
-              </UncontrolledDropdown>
-              <li className="separator d-lg-none" />
-            </Nav>
-          </Collapse>
+          {store.getState().user.token ? (   
+            <Collapse navbar isOpen={collapseOpen}>
+              <Nav className="ml-auto" navbar>
+                <UncontrolledDropdown nav>
+                  <DropdownToggle
+                    caret
+                    color="default"
+                    nav
+                    onClick={(e) => e.preventDefault()}
+                  >
+                    <div className="photo">
+                      <img alt="..." src={require("assets/img/anime3.png")} />
+                    </div>
+                    <b className="caret d-none d-lg-block d-xl-block" />
+                    <p className="d-lg-none">Log out</p>
+                  </DropdownToggle>
+
+                  <DropdownMenu className="dropdown-navbar" right tag="ul">
+                    <NavLink onClick={handleProfile} tag="li">
+                      <DropdownItem  className="nav-item">Profile</DropdownItem>
+                    </NavLink>
+                    <DropdownItem divider tag="li" />
+                    <NavLink onClick={handleLogout} tag="li" >
+                      <DropdownItem className="nav-item">Log out</DropdownItem>
+                    </NavLink>
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+                <li className="separator d-lg-none" />
+              </Nav>
+            </Collapse>
+            ) : (
+              <div>
+              <a href="/login" class="text-primary">Login</a>/
+              <a href="/register" class="text-primary">Register</a>
+              </div>
+          )}
+            
         </Container>
       </Navbar>
       <Modal

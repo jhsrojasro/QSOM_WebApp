@@ -17,7 +17,7 @@
 */
 /*eslint-disable*/
 import React from "react";
-import { NavLink, Link, useLocation } from "react-router-dom";
+import { NavLink, Link, useLocation, useHistory } from "react-router-dom";
 // nodejs library to set properties for components
 import { PropTypes } from "prop-types";
 
@@ -36,6 +36,7 @@ var ps;
 function Sidebar(props) {
   const location = useLocation();
   const sidebarRef = React.useRef(null);
+  const history = useHistory();
   // verifies if routeName is the one active (in browser input)
   const activeRoute = (routeName) => {
     return location.pathname === routeName ? "active" : "";
@@ -57,6 +58,9 @@ function Sidebar(props) {
   const linkOnClick = () => {
     document.documentElement.classList.remove("nav-open");
   };
+  const handleHome = () => {
+    history.push("/home")
+  }
   const { routes, rtlActive, logo } = props;
   let logoImg = null;
   let logoText = null;
@@ -64,10 +68,10 @@ function Sidebar(props) {
     if (logo.outterLink !== undefined) {
       logoImg = (
         <a
-          href={logo.outterLink}
+          href="JavaScript:void(0);"
           className="simple-text logo-mini"
           // target="_blank"
-          onClick={props.toggleSidebar}
+          onClick={handleHome}
         >
           <div className="logo-img">
             <img src={logo.imgSrc} alt="react-logo"/>
@@ -76,10 +80,10 @@ function Sidebar(props) {
       );
       logoText = (
         <a
-          href={logo.outterLink}
+          href="JavaScript:void(0);"
           className="simple-text logo-normal"
           // target="_blank"
-          onClick={props.toggleSidebar}
+          onClick={handleHome}
         >
           {logo.text}
         </a>

@@ -1,33 +1,46 @@
 import React, { useState } from "react";
 import { SignIn, WhoIAm } from '../services';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { signIn, whoAmI} from '../redux/reducers/user';
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import store from '../redux/store';
+import { colores } from "utils/utils";
 // reactstrap components
-import { Input } from "reactstrap";
+import { Input, Form, FormGroup, Button, Row, Col, CardFooter, Card, CardHeader, CardBody, Container } from "reactstrap";
+
 
 function Login() {
-    const user = useSelector((state) => state.user);
     const [loginEmailInput, setLoginEmailInput] = useState("");
     const [loginPasswordInput, setLoginPasswordInput] = useState("");
+    const [msg, setMsg] = useState("");
     const dispatch = useDispatch();
-
+    const history = useHistory();
+    
     const handleLogin = async () => {
-        if (!loginEmailInput || !loginPasswordInput) return;
+        if (!loginEmailInput || !loginPasswordInput){
+            setMsg("Enter your credentials")
+            return;
+        }
+            
         try{
-            console.log(loginEmailInput)
-            console.log(loginPasswordInput)
-            dispatch(signIn(await SignIn(loginEmailInput, loginPasswordInput)));
-            dispatch(whoAmI((await WhoIAm())));
-            if(store.getState().user.token){
-                Redirect("/home");
-            }
+          setMsg("")
+
+          let result = await SignIn(loginEmailInput.target.value, loginPasswordInput.target.value)
+          dispatch(signIn(result)); 
+          
+          let result_who = await WhoIAm(store.getState().user.token)
+          dispatch(whoAmI(result_who));
+          console.log(store.getState().user.token !== "")
+          if(store.getState().user.token !== ""){
+            history.push("/home");
+          }
+          return;
         }catch(e){
             console.log(e)
-            user.token = 'Fail'
-            
+            setMsg("Invalid credentials, please try again")
+            //user.token = 'Fail'
             console.log("Error en el login")
+            return;
         }
         
     }
@@ -35,53 +48,57 @@ function Login() {
   return (
     <>
     <div class="content">
-    <div class="container">
-        <div class="row pt-5">
-            <div class="col-md-6 mt-5 offset-md-3 pt-5 mt-5">
-                <div class="card">
-                    <div class="card-header text-center py-4">
-                        <h4 class="title">
-                            Login
-                        </h4>
-                    </div>
-                    <form method="post" action={handleLogin}>
-                        <div class="card-body px-5 py-3"> 
-                            <div class="row">
-                                <div class="col-md-12 px-md-1">
-                                    <div class="form-group">
-                                        <label>Email</label>
-                                        <Input defaultValue=""
-                                            placeholder="Email"
-                                            type="email"
-                                            onChange={setLoginEmailInput}
-                                            >                                                
-                                        </Input>
-                                    </div>
-                                </div>
-                                <div class="col-md-12 px-md-1">
-                                    <div class="form-group">
-                                        <label>Password</label>
-                                        <Input defaultValue=""
-                                            placeholder="Password"
-                                            type="password"
-                                            onChange={setLoginPasswordInput}>                                                
-                                        </Input>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-footer text-center">
-                            <button type="submit" name="login" class="btn btn-fill btn-primary">Login</button>
-                            <br /><br />
-                            <p>
-                                Don't have an account? <a href="/" class="text-primary">Register</a>                            
-                            </p>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+      <Container>
+      <Row className="row pt-5">
+          <Col className="col-md-6 mt-5 offset-md-3 pt-5 mt-5">
+            <Form action="JavaScript:void(0);" onSubmit={handleLogin}>
+              <Card className="text-center">
+                <CardHeader>
+                  <h5 className="title">Login</h5>
+                  {msg ? <p className="text-danger">{msg}</p> : null}
+                </CardHeader>
+                <CardBody >
+                    <Row >
+                      <Col >
+                        <FormGroup>
+                          <label>
+                            Email address
+                          </label>
+                          <Input 
+                            placeholder="mike@email.com" 
+                            type="email" 
+                            onChange={setLoginEmailInput}/>
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col>
+                        <FormGroup>
+                          <label>Passwords</label>
+                          <Input
+                            defaultValue=""
+                            placeholder="Password"
+                            type="password"
+                            onChange={setLoginPasswordInput}
+                          />
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                </CardBody>
+                <CardFooter>
+                  <Button className="btn-fill" color="info" type="submit">
+                    Login
+                  </Button>
+                  <br /><br />
+                  <p>
+                      You do not have an account? <a href="/register" color={colores['blue']} class="text-primary">Register</a>                            
+                  </p>
+                </CardFooter>
+              </Card>
+            </Form>
+          </Col>
+        </Row>
+      </Container>
     </div>
     </>
   );

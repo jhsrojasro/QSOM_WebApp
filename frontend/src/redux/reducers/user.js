@@ -10,7 +10,11 @@ import {
 const userInitialState = {
     id: '',
     email: '',
-    is_email_verified: false,
+    firstname: '',
+    lastname: '',
+    city: '',
+    country: '',
+    institution: '',
     token: '',
 }
 
@@ -29,19 +33,51 @@ const userSlice = createSlice({
                 ...state,
                 id: action.payload.id,
                 email: action.payload.email,
-                is_email_verified: action.payload.is_email_verified,
-                token: ''
+                firstname: action.payload.firstname,
+                lastname: action.payload.lastname,
+                city: action.payload.city,
+                country: action.payload.country,
+                institution: action.payload.institution,
+                token: 'created'
+            }
+        },
+        update: (state, action) => {
+            console.log("action.payload: ", action.payload);
+            console.log("state: ", state);
+            return {
+                ...state,
+                id: action.payload.id,
+                email: action.payload.email,
+                firstname: action.payload.firstname,
+                lastname: action.payload.lastname,
+                city: action.payload.city,
+                country: action.payload.country,
+                institution: action.payload.institution,
             }
         },
         whoAmI: (state, action) => {
-            const { id, email, is_email_verified } = action.payload;
             return {
                 ...state,
-                id,
-                email,
-                is_email_verified,
+                id: action.payload.id,
+                email: action.payload.email, 
+                firstname: action.payload.firstname,
+                lastname: action.payload.lastname,
+                city: action.payload.city,
+                country: action.payload.country,
+                institution: action.payload.institution,
+                
             };
         },
+        logOut: (state, action) => {
+            return {
+                ...state,
+                id: '',
+                email: '',
+                firstname: '',
+                lastname: '',
+                token: '',
+            };
+        }
     },
 });
 
@@ -49,6 +85,8 @@ export const {
     signIn,
     signUp,
     whoAmI,
+    logOut,
+    update,
 } = userSlice.actions;
 
 export const userReducer = userSlice.reducer;

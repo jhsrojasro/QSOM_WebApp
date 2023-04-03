@@ -99,6 +99,7 @@ function SiteLayout(props) {
     }
     return "Brand";
   };
+  //const isAuth = 
   return (
     <BackgroundColorContext.Consumer>
       {({ color, changeColor }) => (

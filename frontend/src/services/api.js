@@ -1,1 +1,1 @@
-export const BACKEND_API_URL = `${process.env.PROTOCOL}://${process.env.BACKEND_HOST}:${process.env.BACKEND_PORT}`;
+export const BACKEND_API_URL = `${process.env.REACT_APP_PROTOCOL}://${process.env.REACT_APP_BACKEND_HOST}:${process.env.REACT_APP_BACKEND_PORT}`;
