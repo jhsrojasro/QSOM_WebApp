@@ -1,6 +1,6 @@
 import React from 'react';
 import { Scatter, Line } from "react-chartjs-2";
-import { Card, CardHeader, CardTitle, CardBody, Row, Col, CardFooter, Button, Progress } from "reactstrap";
+import { Card, CardHeader, CardTitle, CardBody, Row, Col, CardFooter, Button, Progress, Container } from "reactstrap";
 import { colores, scatter_options, line_options } from 'utils/utils';
 import { useState } from 'react';
 import Chart from 'chart.js/auto';
@@ -76,6 +76,7 @@ function DashboardSOM(props){
         <div className="content">
             <Row>
                 <Col md="12">
+                    <Container>
                     <Card className='text-center'>
                         <CardHeader>
                             <CardTitle tag="h2">Training Results</CardTitle>
@@ -84,7 +85,7 @@ function DashboardSOM(props){
                             <Row>
                                 <Col >
                                     <h3 className='text-center'>Epoch: {state.epoch}</h3>
-                                    <Progress value={state.epoch} color="info"></Progress>
+                                    <Progress value={Math.floor(state.epoch/n*100)} color="info"></Progress>
                                     <Scatter options={scatter_options} data={state.scatterData}/>
                                 </Col>
                             </Row>
@@ -102,6 +103,8 @@ function DashboardSOM(props){
                             <Button onClick={(e) => history.push('/train_models')}>Return</Button>
                         </CardFooter>
                     </Card>
+                    </Container>
+                    
                 </Col>
             </Row>
         </div>
